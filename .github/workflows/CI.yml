@@ -23,7 +23,7 @@ jobs:
         with:
           files: "${{env.DOTNET_ROOT}}/src/GitHubWorkFlow.Host/appsettings.json"
         env:
-          ConnectionStrings.ip: ${{ secret.ip }}
+          ConnectionStrings.ip: ${{ secrets.ip }}
 
       - uses: actions-hub/gcloud@master
         env:
