@@ -15,21 +15,16 @@ jobs:
         with:
           dotnet-version: "3.1.x"
 
-      - name: Build
       - run: dotnet build GitHubWorkFlow.sln --configuration release
 
-      - name: Publish
       - run: dotnet publish --configuration release
 
-      - name: appsettings.json variable substitution
       - uses: microsoft/variable-substitution@v1
         with:
-          files: "${{env.DOTNET_ROOT}}/myapp/appsettings.json"
+          files: "${{env.DOTNET_ROOT}}/src/GitHubWorkFlow.Host/appsettings.json"
         env:
-          ConnectionStrings.Default: ${{ secrets.some_connection_string }}
-          App.ServerRootAddress: ${{ env.SERVER_ROOT_ADDRESS }}
+          ConnectionStrings.ip: ${{ secret.ip }}
 
-      - name: Deploy to google cloud
       - uses: actions-hub/gcloud@master
         env:
           PROJECT_ID: ${{secrets.GCLOUD_PROJECT_ID}}
