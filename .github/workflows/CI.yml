@@ -7,11 +7,32 @@ on:
 
 jobs:
   build:
-    name: Build and Package
+    name: Run action
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: "3.1.x"
-      - run: dotnet build GitHubWorkFlow.sln
+
+      - name: Build
+      - run: dotnet build GitHubWorkFlow.sln --configuration release
+
+      - name: Publish
+      - run: dotnet publish --configuration release
+
+      - name: appsettings.json variable substitution
+      - uses: microsoft/variable-substitution@v1
+        with:
+          files: "${{env.DOTNET_ROOT}}/myapp/appsettings.json"
+        env:
+          ConnectionStrings.Default: ${{ secrets.some_connection_string }}
+          App.ServerRootAddress: ${{ env.SERVER_ROOT_ADDRESS }}
+
+      - name: Deploy to google cloud
+        uses: actions-hub/gcloud@master
+        env:
+          PROJECT_ID: ${{secrets.GCLOUD_PROJECT_ID}}
+          APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
+        with:
+          args: app deploy deploy/app.yaml
