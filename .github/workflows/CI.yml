@@ -21,7 +21,7 @@ jobs:
 
       - uses: microsoft/variable-substitution@v1
         with:
-          files: "${{env.DOTNET_ROOT}}/src/GitHubWorkFlow.Host/appsettings.json"
+          files: "${{env.DOTNET_ROOT}}/src/GitHubWorkFlow.Host/bin/Release/netcoreapp3.1/appsettings.json"
         env:
           ConnectionStrings.ip: ${{ secrets.ip }}
 
