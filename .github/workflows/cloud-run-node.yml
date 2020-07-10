@@ -16,4 +16,4 @@ jobs:
           PROJECT_ID: ${{secrets.GCLOUD_PROJECT_ID}}
           APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
         with:
-          args: auth configure-docker && gcloud builds submit --tag gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/node ./Dockerfile.node && gcloud run deploy githubworkflow-node --image gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/node --platform managed --region europe-north1 --allow-unauthenticated
+          args: auth configure-docker && gcloud builds submit --tag gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/node ./Dockerfile.node && gcloud run deploy githubworkflow-nodets --image gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/node --platform managed --region europe-north1 --allow-unauthenticated
