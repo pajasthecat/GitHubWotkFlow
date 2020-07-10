@@ -1,0 +1,27 @@
+name: Cloud Run Flow
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Run action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - uses: actions-hub/gcloud@master
+        env:
+          PROJECT_ID: ${{secrets.GCLOUD_PROJECT_ID}}
+          APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
+        with:
+          args: builds submit --tag gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/githubworkflow
+
+      - uses: actions-hub/gcloud@master
+        env:
+          PROJECT_ID: ${{secrets.GCLOUD_PROJECT_ID}}
+          APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
+        with:
+          args: run deploy --image gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/githubworkflow --platform managed
