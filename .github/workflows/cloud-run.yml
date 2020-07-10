@@ -16,7 +16,7 @@ jobs:
           PROJECT_ID: ${{secrets.GCLOUD_PROJECT_ID}}
           APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
         with:
-          args: auth configure-docker && builds submit --tag gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/githubworkflow
+          args: auth configure-docker && gcloud builds submit --tag gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/githubworkflow
 
       - uses: actions-hub/gcloud@master
         env:
