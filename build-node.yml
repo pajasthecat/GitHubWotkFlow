@@ -1,5 +1,6 @@
 steps:
-  args:
-    - "--tag gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/node"
-    - "--file=./src/node-test-app/Dockerfile"
-    - .
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "--tag gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/node"
+      - "--file=./src/node-test-app/Dockerfile"
+      - .
